@@ -1,0 +1,19 @@
+#!/bin/bash
+if ! [[ $(head -n 1 $1) =~ ^#[0-9]+:[[:space:]][A-Z].* ]]; then
+    echo "Your commit message does not conform to the required pattern."
+    echo "Expected pattern: '#<issue-number>: <Imperative message>'"
+    echo "Example: '#123: Add profile view'"
+    exec < /dev/tty
+    read -p "Are you sure you want to continue with this commit message? (y/N) " -n 1 -r
+    echo
+    if ! [[ $REPLY =~ ^[Yy]$ ]]; then
+        echo "Commit aborted."
+        exit 1
+    fi
+fi
+
+COMMIT_MSG_PREFIX="dangerfarms/wc-app"
+if [[ $(head -c 1 $1) =~ ^# ]]; then
+  echo "Prepending commit message with $COMMIT_MSG_PREFIX";
+  echo -n $COMMIT_MSG_PREFIX | cat - $1 > /tmp/commit-msg-tmp && mv /tmp/commit-msg-tmp $1
+fi

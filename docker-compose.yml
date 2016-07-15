@@ -1,0 +1,16 @@
+api:
+  build: .
+  command: ./manage.py runserver 0.0.0.0:8000
+  volumes:
+    - .:/app
+    - ./.lib:/app/.lib
+    - ./.bash_history:/root/.bash_history
+    - ./.ipython_history:/root/.ipython/profile_default/history.sqlite
+  ports:
+    - 8000:8000
+  links:
+    - db
+  environment:
+    DJANGO_SETTINGS_MODULE: project.settings.local
+db:
+  image: mdillon/postgis

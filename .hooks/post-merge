@@ -1,0 +1,11 @@
+#!/bin/bash
+changed_files="$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD)"
+
+check_run() {
+  echo "$changed_files" | grep -E --quiet "$1" && eval "$2"
+}
+
+check_run requirements.txt "./.bin/requirements";
+check_run requirements.dev.txt "./.bin/requirements";
+check_run Dockerfile "./.bin/build";
+./.bin/migrate;

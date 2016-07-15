@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [ ! -f /.dockerenv ]; then
+    echo "This script must be run from inside a docker instance. Run './.shell' to run bash inside the container"
+    exit 1
+fi
+
+# Transform path.to.test.module.Class#test_method to path.to.test.module.Class.test_method for django
+ARGS=$(echo $@ | sed -e "s/#/./g")
+
+./manage.py test $ARGS --settings=project.settings.test
+
+exit $?;

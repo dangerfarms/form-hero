@@ -1,0 +1,5 @@
+#!/bin/bash
+docker-compose build;
+docker-compose run --rm api pip install --upgrade pip
+docker-compose run --rm api pip install -r requirements.dev.txt -U
+docker-compose run --rm api pip install -t .lib -r requirements.dev.txt -U
