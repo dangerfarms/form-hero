@@ -12,7 +12,7 @@ This will create all required containers and set up git hooks to allow you to co
 
 ## Development
 
-All commands should be ran from within a container with the exception of `.serve`; you can access the einvormentby using the `./.shell` helper script.
+All commands should be ran from within a container with the exception of `.serve`; you can access a bash shell from within a running container instance using the `./.shell` helper script.
 
 Then you will need to load basic data:
 
