@@ -20,4 +20,4 @@ require_no_unstaged_files_for_commit () {
 require_no_unstaged_files_for_commit commit "Please add or stash them before committing.
 Note: 'git stash --keep-index' will stash only your unstaged files."
 
-./.host_code_check
+docker-compose run --rm api ./.code_check

@@ -62,8 +62,9 @@ echo ""
 # Step 3: Setup up images, containers and data volumes
 # =========================================================
 echo "${INFO}STEP 4: Setup project image, containers and any volumes required${RESET}"
-touch .ipython_history
-touch .bash_history
+rm -rf .ipython_history .bash_history;
+touch .ipython_history;
+touch .bash_history;
 ./.bin/buildall
 ./.bin/requirements
 echo "Complete"

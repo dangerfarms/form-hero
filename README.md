@@ -1,4 +1,6 @@
-# {PROJECT} backend
+# Form Hero
+
+Create forms easily and integrate with a variety of services
 
 ## Install
 
@@ -21,5 +23,4 @@ Then you will need to load basic data:
 ### Useful commands inside the container
 
 - `./.test <path.to.optional.Class.or_test_method`: Run the test suite
-- `./.run_flake8`: Check code conforms to python styleguide
-
+- `./.run_flake8`: Check code conforms to python style-guide
