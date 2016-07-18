@@ -1,4 +1,4 @@
-from django.contrib.postgres.fields.jsonb import JSONField
+from django.contrib.postgres.fields import JSONField
 from django.db import models
 from formhero.apps.models import App
 
@@ -12,7 +12,7 @@ class Form(models.Model):
         ('email', EmailBackend),
     )
 
-    app = models.ForeignKey(App)
+    app = models.ForeignKey(App, default=None)
     name = models.TextField()
     handler = models.TextField(choices=HANDLERS)
     config = JSONField()
