@@ -12,7 +12,7 @@ class Form(models.Model):
         ('email', EmailBackend),
     )
 
-    app = models.ForeignKey(App, default=None)
+    app = models.ForeignKey(App)
     name = models.TextField()
     handler = models.TextField(choices=HANDLERS)
     config = JSONField()
