@@ -1,7 +1,6 @@
 from formhero.providers.base import BaseBackend
 
 
-
 class Backend(BaseBackend):
     """
     Save form data on form instance.

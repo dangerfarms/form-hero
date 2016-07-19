@@ -1,11 +1,9 @@
 from rest_framework import serializers
 from formhero.forms.models import Form
 
-class MessageSerializer(serializers.ModelSerializer):
 
+class FormSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Form
-        fields = (
-
-        )
+        fields = ('app', 'name', 'handler', 'config', )
