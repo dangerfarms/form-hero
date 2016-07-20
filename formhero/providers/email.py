@@ -14,9 +14,9 @@ class Backend(BaseEmailBackend):
     def handle_data(self, form_obj, data):
         backend = EmailBackend(
             host=form_obj.config['EMAIL_HOST'],
-            port=form_obj['email port'],
-            username=data['host username'],
-            password=data['host password']
+            port=form_obj.config['EMAIL_PORT'],
+            username=form_obj.config['HOST_USER'],
+            password=form_obj.config['HOST_PASSWORD']
         )
 
         send_mail(
@@ -24,7 +24,7 @@ class Backend(BaseEmailBackend):
             message=data['body'],
             from_email=data['forward email'],
             recipient_list=[self.TO_EMAIL],
-            auth_user=data['host username'],
-            auth_password=data['host password'],
+            auth_user=form_obj.config['HOST_USER'],
+            auth_password=form_obj.config['HOST_PASSWORD'],
             connection=backend
         )
