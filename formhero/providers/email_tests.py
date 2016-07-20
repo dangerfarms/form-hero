@@ -42,7 +42,7 @@ class SendEmailTest(TestCase):
         self.assertTrue(mock_send_mail.called)
 
     @mock.patch('formhero.providers.email.send_mail')
-    def test_should_check_all_args_are_correct(self, mock_send_mail):
+    def test_should_check_args_are_correct(self, mock_send_mail):
         """
         Mock out send_mail() in Backend. Test that it was given the
         correct arguments.
@@ -56,3 +56,20 @@ class SendEmailTest(TestCase):
         self.assertEqual(arguments['recipient_list'], [Backend.TO_EMAIL])
         self.assertEqual(arguments['auth_user'], self.data['host username'])
         self.assertEqual(arguments['auth_password'], self.data['host password'])
+
+    @mock.patch('formhero.providers.email.send_mail')
+    def test_should_raise_error_if_data_invalid(self):
+        """
+        Create data missing the 'body' parameter, and Check that send_mail raises
+        a KeyError
+        """
+        modified_data = {'forward email': 'forwarder@example.com',
+                     'inquirer email': 'dave@example.com',
+                     'email host': '',
+                     'email port': '',
+                     'host username': '',
+                     'host password': '',
+                     'subject': 'test subject'
+                     }
+        with self.assertRaises(KeyError):
+            self.my_backend.handle_data(form_obj=self.a_form, data=modified_data)
