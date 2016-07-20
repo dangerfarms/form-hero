@@ -3,6 +3,6 @@ from django.db import models
 from formhero.forms.models import Form
 
 
-class FormEntry(models.Model):
+class FormSubmission(models.Model):
     form = models.ForeignKey(Form)
     form_data = JSONField()
