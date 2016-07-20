@@ -1,7 +1,7 @@
 from django.contrib.postgres.fields import JSONField
 from django.db import models
-from formhero.apps.models import App
 
+from formhero.apps.models import App
 from formhero.providers.dbform import Backend as DBBackend
 from formhero.providers.email import Backend as EmailBackend
 
