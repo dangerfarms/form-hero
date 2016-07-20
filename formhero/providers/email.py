@@ -13,8 +13,8 @@ class Backend(BaseEmailBackend):
 
     def handle_data(self, form_obj, data):
         backend = EmailBackend(
-            host=data['email host'],
-            port=data['email port'],
+            host=form_obj.config['EMAIL_HOST'],
+            port=form_obj['email port'],
             username=data['host username'],
             password=data['host password']
         )

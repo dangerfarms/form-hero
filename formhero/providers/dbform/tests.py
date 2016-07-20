@@ -14,12 +14,12 @@ class DatabaseFormTest(TestCase):
                 'inquirer email': 'dave@example.com',
                 'message': 'This is a test message'
                 }
-        self.a_form = Form.objects.create(app=self.an_app, name='Form name', handler='db', config=self.data)
+        self.a_form = Form.objects.create(app=self.an_app, name='Form name', handler='db')
 
         self.db_backend = Backend()
 
     def test_should_save_a_form_entry(self):
-        self.db_backend.handle_data(self.a_form, self.a_form.config)
+        self.db_backend.handle_data(self.a_form, self.data)
         my_form_entry = FormEntry.objects.get(form=self.a_form)
 
         self.assertEqual(my_form_entry.form, self.a_form)
