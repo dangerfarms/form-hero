@@ -13,6 +13,7 @@ class RetrievePostFormTests(APITestCase):
 
     def test_post_a_new_form(self):
         app1 = App.objects.create()
+    #    app1.allowed_hosts.append('sz')
         handler = 'db'
         data = {"app": app1.pk, "name": "Szymon", "handler": handler, "config": "test"}
         url = reverse(CreateForm.URL_NAME, kwargs={'pk': 1})
