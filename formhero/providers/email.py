@@ -18,9 +18,9 @@ class Backend(BaseEmailBackend):
             password=form_obj.config['EMAIL_PASSWORD']
         )
         send_mail(
-            subject='',
+            subject=form_obj.config['SUBJECT'],
             message=data,
-            from_email=form_obj.config['FORWARD_EMAIL'],
+            from_email=form_obj.config['FROM_EMAIL'],
             recipient_list=[form_obj.config['TO_EMAIL']],
             auth_user=form_obj.config['EMAIL_USER'],
             auth_password=form_obj.config['EMAIL_PASSWORD'],
