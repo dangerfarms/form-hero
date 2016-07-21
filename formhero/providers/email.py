@@ -15,8 +15,8 @@ class Backend(BaseEmailBackend):
         backend = EmailBackend(
             host=form_obj.config['EMAIL_HOST'],
             port=form_obj.config['EMAIL_PORT'],
-            username=form_obj.config['HOST_USER'],
-            password=form_obj.config['HOST_PASSWORD']
+            username=form_obj.config['EMAIL_USER'],
+            password=form_obj.config['EMAIL_PASSWORD']
         )
 
         send_mail(
@@ -24,7 +24,7 @@ class Backend(BaseEmailBackend):
             message=data['body'],
             from_email=data['forward email'],
             recipient_list=[self.TO_EMAIL],
-            auth_user=form_obj.config['HOST_USER'],
-            auth_password=form_obj.config['HOST_PASSWORD'],
+            auth_user=form_obj.config['EMAIL_USER'],
+            auth_password=form_obj.config['EMAIL_PASSWORD'],
             connection=backend
         )

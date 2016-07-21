@@ -17,8 +17,8 @@ class SendEmailTest(TestCase):
         self.email_config = {
             'EMAIL_HOST': '',
             'EMAIL_PORT': '',
-            'HOST_USER': '',
-            'HOST_PASSWORD': '',
+            'EMAIL_USER': '',
+            'EMAIL_PASSWORD': '',
         }
         self.data = {'forward email': 'forwarder@example.com',
                      'inquirer email': 'dave@example.com',
@@ -37,8 +37,8 @@ class SendEmailTest(TestCase):
         list_of_keys_that_should_be_in_email_config = (
             'EMAIL_HOST',
             'EMAIL_PORT',
-            'HOST_USER',
-            'HOST_PASSWORD'
+            'EMAIL_USER',
+            'EMAIL_PASSWORD'
         )
         self.assertEqual(len(list_of_keys_that_should_be_in_email_config), len(config))
         for setting in list_of_keys_that_should_be_in_email_config:
@@ -69,8 +69,8 @@ class SendEmailTest(TestCase):
         self.assertEqual(arguments['message'], self.data['body'])
         self.assertEqual(arguments['from_email'], self.data['forward email'])
         self.assertEqual(arguments['recipient_list'], [Backend.TO_EMAIL])
-        self.assertEqual(arguments['auth_user'], self.a_form.config['HOST_USER'])
-        self.assertEqual(arguments['auth_password'], self.a_form.config['HOST_PASSWORD'])
+        self.assertEqual(arguments['auth_user'], self.a_form.config['EMAIL_USER'])
+        self.assertEqual(arguments['auth_password'], self.a_form.config['EMAIL_PASSWORD'])
 
     @mock.patch('formhero.providers.email.send_mail')
     def test_should_raise_error_if_data_invalid(self, mock_send_mail):
