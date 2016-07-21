@@ -4,7 +4,6 @@ from django.core.mail.backends.smtp import EmailBackend
 
 
 class Backend(BaseEmailBackend):
-    TO_EMAIL = 'company.email@example.com'
     """
     Send email out, requires
     email host, port, user, password
@@ -18,12 +17,11 @@ class Backend(BaseEmailBackend):
             username=form_obj.config['EMAIL_USER'],
             password=form_obj.config['EMAIL_PASSWORD']
         )
-
         send_mail(
-            subject=data['subject'],
-            message=data['body'],
-            from_email=data['forward email'],
-            recipient_list=[self.TO_EMAIL],
+            subject='',
+            message=data,
+            from_email=form_obj.config['FORWARD_EMAIL'],
+            recipient_list=[form_obj.config['TO_EMAIL']],
             auth_user=form_obj.config['EMAIL_USER'],
             auth_password=form_obj.config['EMAIL_PASSWORD'],
             connection=backend

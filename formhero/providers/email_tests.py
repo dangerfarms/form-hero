@@ -19,12 +19,10 @@ class SendEmailTest(TestCase):
             'EMAIL_PORT': '',
             'EMAIL_USER': '',
             'EMAIL_PASSWORD': '',
+            'FORWARD_EMAIL': 'forwarder@example.com',
+            'TO_EMAIL': 'company.email@example.com'
         }
-        self.data = {'forward email': 'forwarder@example.com',
-                     'inquirer email': 'dave@example.com',
-                     'body': 'This is a test message body',
-                     'subject': 'test subject'
-                     }
+        self.data = 'This is a test message from inquirer dave@example.com'
         self.a_form = Form(name=self.an_app, handler='email', config=self.email_config)
         self.my_backend = Backend()
 
@@ -38,11 +36,29 @@ class SendEmailTest(TestCase):
             'EMAIL_HOST',
             'EMAIL_PORT',
             'EMAIL_USER',
-            'EMAIL_PASSWORD'
+            'EMAIL_PASSWORD',
+            'FORWARD_EMAIL',
+            'TO_EMAIL'
         )
         self.assertEqual(len(list_of_keys_that_should_be_in_email_config), len(config))
         for setting in list_of_keys_that_should_be_in_email_config:
             self.assertTrue(setting in config)
+
+    def test_should_raise_error_if_form_config_invalid(self):
+        """
+        create email config missing 'FORWARD_EMAIL' key, check that error
+        is raised
+        """
+        modified_config = {
+            'EMAIL_HOST': '',
+            'EMAIL_PORT': '',
+            'EMAIL_USER': '',
+            'EMAIL_PASSWORD': '',
+            'TO_EMAIL': 'company.email@example.com'
+        }
+        self.a_form.config = modified_config
+        with self.assertRaises(AssertionError):
+            self.email_config_checker(self.a_form.config)
 
     @mock.patch('formhero.providers.email.send_mail')
     def test_should_return_true_if_send_mail_method_called(self, mock_send_mail):
@@ -65,22 +81,9 @@ class SendEmailTest(TestCase):
         self.my_backend.handle_data(form_obj=self.a_form, data=self.data)
         arguments = mock_send_mail.call_args[1]
 
-        self.assertEqual(arguments['subject'], self.data['subject'])
-        self.assertEqual(arguments['message'], self.data['body'])
-        self.assertEqual(arguments['from_email'], self.data['forward email'])
-        self.assertEqual(arguments['recipient_list'], [Backend.TO_EMAIL])
+        #self.assertEqual(arguments['subject'], self.data['subject'])
+        self.assertEqual(arguments['message'], self.data)
+        self.assertEqual(arguments['from_email'], self.a_form.config['FORWARD_EMAIL'])
+        self.assertEqual(arguments['recipient_list'], [self.a_form.config['TO_EMAIL']])
         self.assertEqual(arguments['auth_user'], self.a_form.config['EMAIL_USER'])
         self.assertEqual(arguments['auth_password'], self.a_form.config['EMAIL_PASSWORD'])
-
-    @mock.patch('formhero.providers.email.send_mail')
-    def test_should_raise_error_if_data_invalid(self, mock_send_mail):
-        """
-        Create data missing the 'body' parameter, and Check that send_mail raises
-        a KeyError
-        """
-        modified_data = {'forward email': 'forwarder@example.com',
-                         'inquirer email': 'dave@example.com',
-                         'subject': 'test subject'
-                         }
-        with self.assertRaises(KeyError):
-            self.my_backend.handle_data(form_obj=self.a_form, data=modified_data)
