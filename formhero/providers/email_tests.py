@@ -56,7 +56,7 @@ class SendEmailTest(TestCase):
         self.assertTrue(mock_send_mail.called)
 
     @mock.patch('formhero.providers.email.send_mail')
-    def test_should_check_args_are_correct(self, mock_send_mail):
+    def test_should_check_send_mail_args_are_correct(self, mock_send_mail):
         """
         Mock out send_mail() in Backend. Test that it was given the
         correct arguments.

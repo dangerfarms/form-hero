@@ -10,23 +10,19 @@ class DatabaseFormTest(TestCase):
     def setUp(self):
         """
         Create an app, a form, data, and a backend for the tests.
-        Variable db_config is empty as we don't need any
-        configurations (but django complains if nothing is given
-        to the config field of Form)
         """
         self.an_app = App.objects.create(name='this_app')
         self.data = {'name': 'Dave',
                      'inquirer email': 'dave@example.com',
                      'message': 'This is a test message'
                      }
-        self.db_config = ''
-        self.a_form = Form.objects.create(app=self.an_app, name='Form name', handler='db', config=self.db_config)
+        self.a_form = Form.objects.create(app=self.an_app, name='Form name', handler='db')
 
         self.db_backend = Backend()
 
-    def test_should_save_a_form_submission(self):
+    def test_should_save_form_submission_when_method_handle_data_called(self):
         """
-        Check that FormSubmission is saved in the db.
+        Check that FormSubmission is saved in the db when handle_data is called.
         """
         self.db_backend.handle_data(self.a_form, self.data)
         my_form_submission = FormSubmission.objects.get(form=self.a_form)
