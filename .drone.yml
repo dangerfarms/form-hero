@@ -49,7 +49,7 @@ deploy:
     secret_key: $$RANCHER_DEV_SECRET_KEY
     compose_file: .config/dev/docker-compose.yml
     services: web
-    stack: wc-api:dev
+    stack: form-hero:dev
     force: true
     always_pull: true
     confirm: true
