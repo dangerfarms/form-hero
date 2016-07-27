@@ -2,7 +2,6 @@
 cache:
   mount:
   - .site-packages
-  - .docker
 
 # Build, test and version software for use with publish/deploy
 # Define any services needed by the tested container below
