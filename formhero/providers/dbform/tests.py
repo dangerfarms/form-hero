@@ -1,3 +1,5 @@
+from unittest import TestCase
+
 from formhero.apps.models import App
 from formhero.forms.models import Form
 from formhero.providers.dbform import Backend
