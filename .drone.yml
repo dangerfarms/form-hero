@@ -37,7 +37,7 @@ deploy:
     access_key: $$RANCHER_DEV_ACCESS_KEY
     secret_key: $$RANCHER_DEV_SECRET_KEY
     compose_file: .config/dev/docker-compose.yml
-    services: api
+    services: api data
     stack: form-hero:dev
     force: true
     always_pull: true
