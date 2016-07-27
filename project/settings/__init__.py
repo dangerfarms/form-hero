@@ -147,5 +147,3 @@ except ImportError:
     pass
 
 DATABASES = {'default': dj_database_url.parse(DB_URL)}
-
-BLAH = 'blah'
