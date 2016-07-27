@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     # App specific
     'project',
     'formhero.apps',
-    'formhero.providers',
+    'formhero.providers.dbform',
     'formhero.forms'
 
 
