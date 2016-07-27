@@ -1,3 +1,10 @@
-from django.shortcuts import render
+from rest_framework.generics import CreateAPIView
+from formhero.forms.serializers import FormSerializer
+from formhero.forms.models import Form
 
-# Create your views here.
+
+class CreateForm(CreateAPIView):
+
+    URL_NAME = 'create-form'
+    serializer_class = FormSerializer
+    queryset = Form.objects.all()
