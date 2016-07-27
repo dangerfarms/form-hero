@@ -51,6 +51,11 @@ INSTALLED_APPS = [
 
     # App specific
     'project',
+    'formhero.apps',
+    'formhero.providers.dbform',
+    'formhero.forms'
+
+
 ]
 
 
@@ -142,3 +147,5 @@ except ImportError:
     pass
 
 DATABASES = {'default': dj_database_url.parse(DB_URL)}
+
+BLAH = 'blah'

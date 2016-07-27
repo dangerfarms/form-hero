@@ -1,0 +1,27 @@
+common:
+  image: dangerfarms/form-hero:dev
+  labels:
+    io.rancher.container.pull_image: always
+  environment:
+    DJANGO_SETTINGS_MODULE: project.settings.dev
+
+web:
+  extends:
+    service: common
+  command: bash -c "./manage.py collectstatic --noinput && ./manage.py migrate --noinput && uwsgi --http :8000 --mount /blog=project/wsgi.py --manage-script-name"
+  ports:
+    - 8000
+  volumes_from:
+    - data
+  links:
+    - db
+
+db:
+  image: mdillon/postgis
+
+data:
+  image: alpine
+  command: cat
+  volumes:
+    - /app/project/config
+    - /app/project/media

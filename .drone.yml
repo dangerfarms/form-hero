@@ -1,0 +1,58 @@
+## Cache directories for performance
+cache:
+  mount:
+  - .site-packages
+  - .docker
+
+# Build, test and version software for use with publish/deploy
+# Define any services needed by the tested container below
+# Only test on commits, not tags as a tag is just a pointer to a commit
+build:
+  test:
+    image: dangerfarms/geodrf-alpine:latest
+    commands:
+    - mkdir -p .site-packages && cp -a .site-packages/. /usr/local/lib/python3.5/site-packages && rm -rf .site-packages/*
+    - pip install -r requirements.txt
+    - sleep 10 # To let DB start up. Improve
+    - python manage.py migrate --noinput
+    - python manage.py test --settings=project.settings.ci
+    - cp -a /usr/local/lib/python3.5/site-packages/. .site-packages
+    environment:
+    - DJANGO_SETTINGS_MODULE=project.settings.ci
+  write-build:
+    image: dangerfarms/geodrf-alpine:latest
+    commands:
+    - echo "BUILD = '$(echo "$$COMMIT" | cut -c1-7)'" >> project/settings/__init__.py
+compose:
+  db:
+    image: mdillon/postgis
+
+
+publish:
+  # Publish image to dockerhub with :dev tag on all development commits
+  docker:
+    username: $$DOCKER_HUB_USER
+    password: $$DOCKER_HUB_PASSWORD
+    email: services@dangerfarms.com
+    repo: dangerfarms/form-hero
+    tag: dev
+    file: Dockerfile.build
+    when:
+      branch: development
+
+# Deploy to rancher using up
+deploy:
+  deploy-dev:
+    image: dangerfarms/drone-rancher:latest
+    pull: true
+    url: $$RANCHER_URL
+    access_key: $$RANCHER_DEV_ACCESS_KEY
+    secret_key: $$RANCHER_DEV_SECRET_KEY
+    compose_file: .config/dev/docker-compose.yml
+    services: web
+    stack: wc-api:dev
+    force: true
+    always_pull: true
+    confirm: true
+    when:
+      branch: development
