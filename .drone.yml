@@ -3,6 +3,7 @@ cache:
   mount:
   - .site-packages
 
+
 # Build, test and version software for use with publish/deploy
 # Define any services needed by the tested container below
 # Only test on commits, not tags as a tag is just a pointer to a commit
@@ -26,18 +27,6 @@ compose:
   db:
     image: mdillon/postgis
 
-
-publish:
-  # Publish image to dockerhub with :dev tag on all development commits
-  docker:
-    username: $$DOCKER_HUB_USER
-    password: $$DOCKER_HUB_PASSWORD
-    email: services@dangerfarms.com
-    repo: dangerfarms/form-hero
-    tag: dev
-    file: Dockerfile.build
-    when:
-      branch: development
 
 # Deploy to rancher using up
 deploy:
