@@ -28,6 +28,20 @@ compose:
     image: mdillon/postgis
 
 
+publish:
+  # Publish image to dockerhub with :dev tag on all development commits
+  docker:
+    username: $$DOCKER_HUB_USER
+    password: $$DOCKER_HUB_PASSWORD
+    email: services@wintercircle.co
+    repo: dangerfarms/form-hero
+    tag: dev
+    file: Dockerfile.build
+    storage_driver: vfs
+    when:
+      branch: development
+
+
 # Deploy to rancher using up
 deploy:
   deploy-dev:
@@ -37,7 +51,7 @@ deploy:
     access_key: $$RANCHER_DEV_ACCESS_KEY
     secret_key: $$RANCHER_DEV_SECRET_KEY
     compose_file: .config/dev/docker-compose.yml
-    services: api data
+    services: api
     stack: form-hero:dev
     force: true
     always_pull: true
