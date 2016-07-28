@@ -5,7 +5,7 @@ api:
     io.rancher.sidekicks: data
   environment:
     DJANGO_SETTINGS_MODULE: project.settings.dev
-  command: bash -c "./manage.py collectstatic --noinput && ./manage.py migrate --noinput && uwsgi --http :8000 --mount /form-hero=project/wsgi.py --static-map /form-hero/static=project/media/static --manage-script-name"
+  command: bash -c "./manage.py collectstatic --noinput && ./manage.py migrate --noinput && uwsgi --http :8000 --mount /form-hero=project/wsgi.py --static-map /static=project/media/static --manage-script-name"
   ports:
     - 8000
   volumes_from:
