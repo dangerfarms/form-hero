@@ -37,7 +37,6 @@ publish:
     repo: dangerfarms/form-hero
     tag: dev
     file: Dockerfile.build
-    storage_driver: vfs
     when:
       branch: development
 
