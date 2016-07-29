@@ -1,4 +1,4 @@
-from unittest import TestCase
+from django.test import TestCase
 
 from formhero.apps.models import App
 from formhero.forms.models import Form

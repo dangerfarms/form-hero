@@ -1,5 +1,6 @@
-from django.contrib.postgres.fields.jsonb import JSONField
 from django.db import models
+
+from django.contrib.postgres.fields.jsonb import JSONField
 
 from formhero.forms.models import Form
 
