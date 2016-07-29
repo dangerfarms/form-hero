@@ -1,6 +1,5 @@
-from unittest import mock
-
 from django.test import TestCase
+from unittest import mock
 
 from formhero.apps.models import App
 from formhero.forms.models import Form
@@ -27,7 +26,7 @@ class SendEmailTest(TestCase):
         self.data = {'name': 'Dave',
                      'message': 'This is a test message'
 
-        }
+                     }
         self.a_form = Form(name=self.an_app, handler='email', config=self.email_config)
         self.my_backend = Backend()
 

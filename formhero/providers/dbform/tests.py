@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# Create your tests here.
-=======
 from django.test import TestCase
 
 from formhero.apps.models import App
@@ -43,4 +40,3 @@ class DatabaseFormTest(TestCase):
         self.assertEqual(my_form_submission.form_data['message'], self.data['message'])
         self.assertEqual(my_form_submission.form_data['name'], self.data['name'])
         self.assertEqual(my_form_submission.form_data['inquirer email'], self.data['inquirer email'])
->>>>>>> b9cc2e78cf519f2f1654d8eaa3c034d97897d0f0
