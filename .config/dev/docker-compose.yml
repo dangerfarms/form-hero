@@ -1,0 +1,26 @@
+api:
+  image: dangerfarms/form-hero:dev
+  labels:
+    io.rancher.container.pull_image: always
+    io.rancher.sidekicks: data
+  environment:
+    DJANGO_SETTINGS_MODULE: project.settings.dev
+  command: bash -c "./manage.py collectstatic --noinput && ./manage.py migrate --noinput && uwsgi --http :8000 --mount /form-hero=project/wsgi.py --static-map /static=/app/project/static --manage-script-name"
+  ports:
+    - 8000
+  volumes_from:
+    - data
+  links:
+    - db
+
+db:
+  image: mdillon/postgis
+
+data:
+  image: alpine
+  command: cat
+  tty: true
+  stdin_open: true
+  volumes:
+    - /app/project/config
+    - /app/project/media
