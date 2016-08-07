@@ -1,5 +1,4 @@
 #!/bin/bash
 docker-compose build;
 docker-compose run --rm api pip install --upgrade pip
-docker-compose run --rm api pip install -r requirements.dev.txt -U
-docker-compose run --rm api pip install -t .lib -r requirements.dev.txt -U
+docker-compose run --rm api pip install --user -r requirements.dev.txt --install-option="--install-scripts=/usr/local/bin" -U
